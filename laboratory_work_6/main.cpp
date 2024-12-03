@@ -177,27 +177,28 @@ int main()
     int* A = new int[n];
     for (int i = 0; i < n;i++) cin >> A[i];
     for (int i = 0; i < n; i++) cout << A[i] << " ";
-    for (int i = 0; i < n;) {
-        if (SumOfDigitsMultiple7(A[i])) {
-            for (int j = i + 1; j < n; j++) A[j - 1] = A[j];
+    cout << endl;
+    for(int i=0;i<n;i++)
+    {
+        if(SumOfDigitsMultiple7(A[i]))
+        {
+            for(int j = i; j<n-1;j++)
+                A[j] = A[j+1];
+            i--;
             n--;
         }
-        else
-        {
-            i++;
-        }
     }
-    for (int i = 0; i < n;) {
-        if (duplicate(A[i])) {
-            for (int j = n; j > i; j++) A[j] = A[j - 1];
-            n++;
-            i += 2;
-        }
-        else {
+    for(int i=0;i<n;i++)
+    {
+        if(duplicate(A[i]))
+        {
+            for(int j = n;j>i;j--)
+                A[j] = A[j-1];
             i++;
+            n++;   
         }
     }
     for (int i = 0; i < n; i++) cout << A[i] << " ";
-    delete[] A;
     return 0;
+
 }
