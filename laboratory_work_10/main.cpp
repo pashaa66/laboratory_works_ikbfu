@@ -74,7 +74,7 @@ bool containsEight(int num) {
 }
 
 void processEights(Node* &top) {
-    // Remove leading nodes without 8
+   
     while (top != nullptr && !containsEight(top->info)) {
         Node* temp = top->next;
         delete top;
