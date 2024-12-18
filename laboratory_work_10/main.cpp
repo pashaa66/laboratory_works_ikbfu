@@ -2,24 +2,22 @@
 
 using namespace std;
 
-// ��� ������, ����������� ������ �������� ������ ���� ������
 struct Node
 {
-    int info;     // �������� ����������, ���������� � ���� ����
-    Node * next;  // ����� ���������� ���� ������
-                  // (nullptr, ���� ������ ������� �������� ���������)
+    int info;     
+    Node * next;  
+                  
 };
 
 // ����������� ������
 void print_list(Node * top)
 {
-    Node * p = top;  // ����� �������� �������� ������
+    Node * p = top;  
     while (p != nullptr) {
-        cout << p->info << " ";  // �������� �������� ���������� �������� ����
-        p = p->next;  // ����� ���������� ���� ���������� �������
+        cout << p->info << " ";  
+        p = p->next;  
     }
 }
-// �������� ������
 void delete_list(Node * top)
 {
     Node * p = top;
@@ -76,6 +74,7 @@ bool containsEight(int num) {
 }
 
 void processEights(Node* &top) {
+    // Remove leading nodes without 8
     while (top != nullptr && !containsEight(top->info)) {
         Node* temp = top->next;
         delete top;
@@ -83,17 +82,25 @@ void processEights(Node* &top) {
     }
     
     Node* p = top;
-    while (p != nullptr && p->next != nullptr) {
-        if (!containsEight(p->next->info)) {
-            Node* temp = p->next;
-            p->next = temp->next;
-            delete temp;
-        } else {
+    while (p != nullptr) {
+        if (containsEight(p->info)) {
             Node* newNode = new Node;
-            newNode->info = p->next->info;
-            newNode->next = p->next->next;
-            p->next->next = newNode;
-            p = newNode->next;
+            newNode->info = p->info;
+            newNode->next = p->next;
+            p->next = newNode;
+            p = newNode->next; 
+        } else {
+            if (p == top) {
+                top = p->next;
+                delete p;
+                p = top;
+            } else {
+                Node* prev = top;
+                while (prev->next != p) prev = prev->next;
+                prev->next = p->next;
+                delete p;
+                p = prev->next;
+            }
         }
     }
 }
