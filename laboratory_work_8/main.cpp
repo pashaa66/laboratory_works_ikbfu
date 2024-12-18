@@ -1,5 +1,4 @@
 #include <iostream>
-#include<fstream>
 using namespace std;
 string vowels = "AEIOUYaeiouy";
 string consonants = "BCDFGHJKLMNPQRSTVWXZbcdfghjklmnpqrstvwxz";
@@ -38,6 +37,7 @@ void delete_consonants(string &s){
     }
 }
 
+
 void duplicate_vowels(string &s){
     for(int i = 0; i < s.length();){
         if(vowels.find(s[i]) != -1){
@@ -57,12 +57,34 @@ void sort(string * words, int n){
     }
 }
 
-int main()
-{
-    string text;
-    cin >> text;
-    for (int i = 0; i < text.length(); i++) {
-        cout<<text[i]<<endl;
+int main() {
+    const int MAX_WORDS = 100;
+    string words[MAX_WORDS];
+    int word_count = 0;
+    string word;
+    while (cin >> word && word != ".") {
+        words[word_count++] = word;
     }
+    
+    bool has_word_with_duplicate_vowels = false;
+    for (int i = 0; i < word_count; i++) {
+        if (hasDoubleVowels(words[i])) {
+            has_word_with_duplicate_vowels = true;
+            break;
+        }
+    }
+    
+    for (int i = 0; i < word_count; i++) {
+        if (has_word_with_duplicate_vowels) {
+            delete_consonants(words[i]);
+        } else if (count_vowels(words[i]) >= 3) {
+            duplicate_vowels(words[i]);
+        }
+    }
+    sort(words, word_count);
+    for (int i = 0; i < word_count; i++) {
+        cout << words[i] << " ";
+    }
+    cout << endl;
     return 0;
 }
