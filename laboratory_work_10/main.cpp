@@ -9,7 +9,6 @@ struct Node
                   
 };
 
-// ����������� ������
 void print_list(Node * top)
 {
     Node * p = top;  
@@ -74,7 +73,6 @@ bool containsEight(int num) {
 }
 
 void processEights(Node* &top) {
-   
     while (top != nullptr && !containsEight(top->info)) {
         Node* temp = top->next;
         delete top;
